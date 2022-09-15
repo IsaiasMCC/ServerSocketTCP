@@ -34,8 +34,7 @@ public class ClientListener extends Thread {
         while (state) {
             try {
                 this.client = this.socket.accept();
-                dispatcherOnconnectedClient(this.socket, this.client);
-                
+                dispatcherOnconnectedClient(this.socket, this.client, String.valueOf(this.socket.hashCode()), "juanito001", "juanito001");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -43,8 +42,8 @@ public class ClientListener extends Thread {
         }
     }
     
-    private void dispatcherOnconnectedClient(ServerSocket socket, Socket client){
-        SocketEvent obj = new SocketEvent(this, socket, client);
+    private void dispatcherOnconnectedClient(ServerSocket socket, Socket client, String id, String nick, String password){
+        SocketEvent obj = new SocketEvent(this, socket, client, id, nick, password);
         for(SocketEventListener e : listeners)
             e.onConnectedClient(obj);
     }

@@ -11,7 +11,7 @@ import Events.*;
  * @author Isai
  */
 public class DataListener extends Thread {
-
+    
     private Socket client;
     private BufferedReader inputStream;
     private List<SocketEventListener> listeners;
@@ -38,7 +38,7 @@ public class DataListener extends Thread {
                         break;
                     }
                 }
-                dispatcherOnDisconnectedClient(client);
+                //dispatcherOnDisconnectedClient(client);
                 
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -48,8 +48,8 @@ public class DataListener extends Thread {
                     System.out.println("sdjkfljsdklfjsdfklsjdf");
                     //this.client.close();
                     this.state = false;
-                
-
+                    
+                    
             }
 
         }
@@ -59,9 +59,9 @@ public class DataListener extends Thread {
         this.listeners.add(listener);
     }
     
-    public void dispatcherOnDisconnectedClient(Socket client){
-        SocketEvent obj = new SocketEvent(this, null, client);
+    /* public void dispatcherOnDisconnectedClient(Socket client){
+        //SocketEvent obj = new SocketEvent(this, null, client);
         for(SocketEventListener e: listeners)
             e.onConnectedClient(obj);
-    }
+    } */
 }
