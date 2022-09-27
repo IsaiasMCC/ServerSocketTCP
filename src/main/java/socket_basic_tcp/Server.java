@@ -1,7 +1,6 @@
 
 package socket_basic_tcp;
-import Events.SocketEvent;
-import Events.SocketEventListener;
+import Events.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -10,7 +9,7 @@ import java.util.*;
  *
  * @author Isai
  */
-public class Server implements SocketEventListener{
+public class Server implements SocketEventListener, DataEventListener{
     private ServerSocket serverSocket;
     private ClientListener threadListener;
     private Hashtable<String, SocketEvent> clientsConnected;
@@ -38,15 +37,19 @@ public class Server implements SocketEventListener{
     public void onConnectedClient(SocketEvent ev){
         System.out.println("Client connected");
         DataListener threadDataListener = new DataListener(ev.getClient());
-        threadDataListener.addSocketListener(this);
+        threadDataListener.addDataListener(this);
         threadDataListener.start();
-        System.out.println("Thread created");
         this.clientsConnected.put(ev.getEventClient().getId(), ev);
     }
 
     @Override
     public void onDisconnectedClient(SocketEvent ev) {
         System.out.println("Client Disconnect");
+    }
+
+    @Override
+    public void OnRead(DataEvent ev) {
+        System.out.println("Message Recived : " + ev.getData());
     }
     
 }
